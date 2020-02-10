@@ -1,0 +1,11 @@
+
+# Ignore Python Stuff
+__pycache__
+*.pyc
+*.bak
+
+# Ignore Python Virtual Environments
+*env/
+
+# Ignore VSCode Stuff
+.vscode/
