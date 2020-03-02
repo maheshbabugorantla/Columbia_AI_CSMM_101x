@@ -34,7 +34,7 @@ class PuzzleState(object):
 
         for i, item in enumerate(self.config):
             if item == 0:
-                self.blank_row = i / self.n
+                self.blank_row = i // self.n
                 self.blank_col = i % self.n
                 break
 
@@ -117,7 +117,6 @@ class PuzzleState(object):
 
         return self.children
 
-
 # Function that Writes to output.txt
 # Students need to change the method to have the corresponding parameters
 def writeOutput():
@@ -129,8 +128,23 @@ def writeOutput():
 def bfs_search(initial_state):
     """BFS search"""
 
+    goal_state = (0, 1, 2, 3, 4, 5, 6, 7, 8)
+
     ### STUDENT CODE GOES HERE ###
-    raise NotImplementedError("{}".format(__name__))
+    bfs_tree = BFS(start_state=initial_state, goal_state=goal_state)
+    goal_found, path_to_goal, path_cost, nodes_expanded, search_depth, max_search_depth = bfs_tree.search(display_path=True)
+
+    if not goal_found:
+        print('Puzzle is not solvable')
+        return
+
+    print(f"Path to Goal: {path_to_goal}")
+    print(f"Cost of Path: {path_cost}")
+    print(f"Nodes Expanded: {nodes_expanded}")
+    print(f"Search Depth: {search_depth}")
+    print(f"Max Search Depth: {max_search_depth}")
+
+    # raise NotImplementedError("{}".format(__name__))
 
 
 def dfs_search(initial_state):
@@ -170,8 +184,6 @@ def test_goal(puzzle_state):
 
 # Main Function that reads in Input and Runs corresponding Algorithm
 def main():
-
-    exit(0)
 
     if len(sys.argv) < 3:
         print()
