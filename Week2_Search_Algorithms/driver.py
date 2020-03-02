@@ -139,7 +139,6 @@ class PuzzleState(object):
 
         return self.children
 
-
 # Function that Writes to output.txt
 # Students need to change the method to have the corresponding parameters
 def writeOutput(file_prefix='', print_output=False, **kwargs):
