@@ -2,7 +2,7 @@
 
 import sys
 import time
-import resource
+from resource import getrusage, RUSAGE_SELF
 import math
 
 from utility.bfs import BFS
@@ -119,10 +119,30 @@ class PuzzleState(object):
 
 # Function that Writes to output.txt
 # Students need to change the method to have the corresponding parameters
-def writeOutput():
-
+def writeOutput(file_prefix='', print_output=False, **kwargs):
     # Student Code Goes here
-    raise NotImplementedError("{}".format(__name__))
+    output_lines = []
+    output_lines.append(f'path_to_goal: {kwargs.get("path_to_goal", [])}')
+    output_lines.append(f'cost_of_path: {kwargs.get("cost_of_path", 0)}')
+    output_lines.append(f'nodes_expanded: {kwargs.get("nodes_expanded", 0)}')
+    output_lines.append(f'search_depth: {kwargs.get("search_depth", 0)}')
+    output_lines.append(f'max_search_depth: {kwargs.get("max_search_depth", 0)}')
+    output_lines.append(f'running_time: {kwargs.get("running_time", float("Inf"))}')
+    output_lines.append(f'max_ram_usage: {kwargs.get("max_ram_usage", float("Inf"))}')
+
+    filename = f"{file_prefix}_output.txt" if file_prefix else "output.txt"
+
+    with open(filename, 'w') as output_file:
+        output_file.writelines('\n'.join(output_lines) + "\n")
+
+    if print_output:
+        print(f'Path to Goal: {kwargs.get("path_to_goal", [])}')
+        print(f'Cost of Path: {kwargs.get("cost_of_path", 0)}')
+        print(f'Nodes Expanded: {kwargs.get("nodes_expanded", 0)}')
+        print(f'Search Depth: {kwargs.get("search_depth", 0)}')
+        print(f'Max Search Depth: {kwargs.get("max_search_depth", 0)}')
+        print(f'Running Time: {kwargs.get("running_time", float("Inf"))}')
+        print(f'Max RAM Usage: {kwargs.get("max_ram_usage", float("Inf"))}')
 
 
 def bfs_search(initial_state):
@@ -130,21 +150,30 @@ def bfs_search(initial_state):
 
     goal_state = (0, 1, 2, 3, 4, 5, 6, 7, 8)
 
+    start_time = time.time()
+
     ### STUDENT CODE GOES HERE ###
-    bfs_tree = BFS(start_state=initial_state, goal_state=goal_state)
-    goal_found, path_to_goal, path_cost, nodes_expanded, search_depth, max_search_depth = bfs_tree.search(display_path=True)
+    start_ram_usage = getrusage(RUSAGE_SELF).ru_maxrss
+    bfs_tree = BFS(start_state=initial_state,
+                   goal_state=goal_state,
+                   start_ram_usage=start_ram_usage)
+    goal_found, path_to_goal, path_cost, nodes_expanded, search_depth = bfs_tree.search(display_path=True)
+    running_time = time.time() - start_time
+    max_search_depth = bfs_tree.get_max_search_depth()
+    max_ram_usage = bfs_tree.get_max_ram_usage()
 
     if not goal_found:
         print('Puzzle is not solvable')
         return
 
-    print(f"Path to Goal: {path_to_goal}")
-    print(f"Cost of Path: {path_cost}")
-    print(f"Nodes Expanded: {nodes_expanded}")
-    print(f"Search Depth: {search_depth}")
-    print(f"Max Search Depth: {max_search_depth}")
-
-    # raise NotImplementedError("{}".format(__name__))
+    writeOutput(file_prefix='',
+                path_to_goal=path_to_goal,
+                cost_of_path=path_cost,
+                nodes_expanded=nodes_expanded,
+                search_depth=search_depth,
+                max_search_depth=max_search_depth,
+                running_time=running_time,
+                max_ram_usage=max_ram_usage)
 
 
 def dfs_search(initial_state):
