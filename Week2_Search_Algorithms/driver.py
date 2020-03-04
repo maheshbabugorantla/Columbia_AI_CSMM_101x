@@ -51,8 +51,10 @@ class PuzzleState(object):
         blank_index = self.blank_row * self.n + self.blank_col
         target = blank_index - 1
         new_config = list(self.config)
-        new_config[blank_index], new_config[target] = new_config[target], new_config[blank_index]
-        return PuzzleState(tuple(new_config), self.n, parent=self, action="Left", cost=self.cost + 1)
+        new_config[blank_index], new_config[target] = (new_config[target],
+                                                       new_config[blank_index])
+        return PuzzleState(tuple(new_config), self.n, parent=self,
+                           action="Left", cost=self.cost + 1)
 
     def move_right(self):
 
@@ -62,8 +64,10 @@ class PuzzleState(object):
         blank_index = self.blank_row * self.n + self.blank_col
         target = blank_index + 1
         new_config = list(self.config)
-        new_config[blank_index], new_config[target] = new_config[target], new_config[blank_index]
-        return PuzzleState(tuple(new_config), self.n, parent=self, action="Right", cost=self.cost + 1)
+        new_config[blank_index], new_config[target] = (new_config[target],
+                                                       new_config[blank_index])
+        return PuzzleState(tuple(new_config), self.n, parent=self,
+                           action="Right", cost=self.cost + 1)
 
     def move_up(self):
 
@@ -73,8 +77,10 @@ class PuzzleState(object):
         blank_index = self.blank_row * self.n + self.blank_col
         target = blank_index - self.n
         new_config = list(self.config)
-        new_config[blank_index], new_config[target] = new_config[target], new_config[blank_index]
-        return PuzzleState(tuple(new_config), self.n, parent=self, action="Up", cost=self.cost + 1)
+        new_config[blank_index], new_config[target] = (new_config[target],
+                                                       new_config[blank_index])
+        return PuzzleState(tuple(new_config), self.n, parent=self,
+                           action="Up", cost=self.cost + 1)
 
     def move_down(self):
 
@@ -84,8 +90,10 @@ class PuzzleState(object):
         blank_index = self.blank_row * self.n + self.blank_col
         target = blank_index + self.n
         new_config = list(self.config)
-        new_config[blank_index], new_config[target] = new_config[target], new_config[blank_index]
-        return PuzzleState(tuple(new_config), self.n, parent=self, action="Down", cost=self.cost + 1)
+        new_config[blank_index], new_config[target] = (new_config[target],
+                                                       new_config[blank_index])
+        return PuzzleState(tuple(new_config), self.n, parent=self,
+                           action="Down", cost=self.cost + 1)
 
     def expand(self, change_order=False):
         """expand the node"""
@@ -131,6 +139,7 @@ class PuzzleState(object):
 
         return self.children
 
+
 # Function that Writes to output.txt
 # Students need to change the method to have the corresponding parameters
 def writeOutput(file_prefix='', print_output=False, **kwargs):
@@ -166,15 +175,14 @@ def bfs_search(initial_state):
 
     start_time = time.time()
 
-    ### STUDENT CODE GOES HERE ###
     start_ram_usage = getrusage(RUSAGE_SELF).ru_maxrss
-    bfs_tree = BFS(start_state=initial_state,
+    bfs_tree = BFS(initial_state=initial_state,
                    goal_state=goal_state,
                    start_ram_usage=start_ram_usage)
 
-    goal_found, path_to_goal, \
-    path_cost, nodes_expanded, \
-    search_depth = bfs_tree.search(display_path=False)
+    (goal_found, path_to_goal,
+     path_cost, nodes_expanded,
+     search_depth) = bfs_tree.search(display_path=False)
 
     running_time = time.time() - start_time
     max_search_depth = bfs_tree.get_max_search_depth()
@@ -201,15 +209,14 @@ def dfs_search(initial_state):
 
     start_time = time.time()
 
-    ### STUDENT CODE GOES HERE ###
     start_ram_usage = getrusage(RUSAGE_SELF).ru_maxrss
     dfs_tree = DFS(initial_state=initial_state,
                    goal_state=goal_state,
                    start_ram_usage=start_ram_usage)
 
-    goal_found, path_to_goal, \
-    path_cost, nodes_expanded, \
-    search_depth = dfs_tree.search(display_path=False)
+    (goal_found, path_to_goal,
+     path_cost, nodes_expanded,
+     search_depth) = dfs_tree.search(display_path=False)
 
     running_time = time.time() - start_time
     max_search_depth = dfs_tree.get_max_search_depth()
@@ -232,28 +239,24 @@ def dfs_search(initial_state):
 def A_star_search(initial_state):
     """A * search"""
 
-    ### STUDENT CODE GOES HERE ###
     raise NotImplementedError("{}".format(__name__))
 
 
 def calculate_total_cost(state):
     """calculate the total estimated cost of a state"""
 
-    ### STUDENT CODE GOES HERE ###
     raise NotImplementedError("{}".format(__name__))
 
 
 def calculate_manhattan_dist(idx, value, n):
     """calculate the manhattan distance of a tile"""
 
-    ### STUDENT CODE GOES HERE ###
     raise NotImplementedError("{}".format(__name__))
 
 
 def test_goal(puzzle_state):
     """test the state is the goal state or not"""
 
-    ### STUDENT CODE GOES HERE ###
     raise NotImplementedError("{}".format(__name__))
 
 
