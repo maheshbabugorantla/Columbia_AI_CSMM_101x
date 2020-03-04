@@ -109,6 +109,7 @@ class PuzzleState(object):
                 down_child = self.move_down()
                 if down_child is not None:
                     self.children.append(down_child)
+<<<<<<< HEAD
 
                 left_child = self.move_left()
                 if left_child is not None:
@@ -133,6 +134,32 @@ class PuzzleState(object):
                 if down_child is not None:
                     self.children.append(down_child)
 
+=======
+
+                left_child = self.move_left()
+                if left_child is not None:
+                    self.children.append(left_child)
+
+                right_child = self.move_right()
+                if right_child is not None:
+                    self.children.append(right_child)
+
+        else:
+            if len(self.children) == 0:
+
+                up_child = self.move_up()
+                if up_child is not None:
+                    self.children.append(up_child)
+
+                left_child = self.move_left()
+                if left_child is not None:
+                    self.children.append(left_child)
+
+                down_child = self.move_down()
+                if down_child is not None:
+                    self.children.append(down_child)
+
+>>>>>>> f61247b... Added an optimal order of expansion to PuzzleState.expand method, Refactored the bfs_search method and Added dfs_search method definition
                 right_child = self.move_right()
                 if right_child is not None:
                     self.children.append(right_child)
@@ -208,14 +235,24 @@ def dfs_search(initial_state):
 
     start_time = time.time()
 
+<<<<<<< HEAD
+=======
+    ### STUDENT CODE GOES HERE ###
+>>>>>>> f61247b... Added an optimal order of expansion to PuzzleState.expand method, Refactored the bfs_search method and Added dfs_search method definition
     start_ram_usage = getrusage(RUSAGE_SELF).ru_maxrss
     dfs_tree = DFS(initial_state=initial_state,
                    goal_state=goal_state,
                    start_ram_usage=start_ram_usage)
 
+<<<<<<< HEAD
     (goal_found, path_to_goal,
      path_cost, nodes_expanded,
      search_depth) = dfs_tree.search(display_path=False)
+=======
+    goal_found, path_to_goal, \
+    path_cost, nodes_expanded, \
+    search_depth = dfs_tree.search(display_path=False)
+>>>>>>> f61247b... Added an optimal order of expansion to PuzzleState.expand method, Refactored the bfs_search method and Added dfs_search method definition
 
     running_time = time.time() - start_time
     max_search_depth = dfs_tree.get_max_search_depth()
