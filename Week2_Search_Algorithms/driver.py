@@ -1,5 +1,3 @@
-# import Queue as Q
-
 import sys
 import time
 from resource import getrusage, RUSAGE_SELF
@@ -10,11 +8,8 @@ from utility.dfs import DFS
 from utility.a_star import AStar
 from utility.priority_queue import PriorityQueue
 
-#### SKELETON CODE ####
 
 # The Class that Represents the Puzzle
-
-
 class PuzzleState(object):
 
     """docstring for PuzzleState"""
@@ -92,28 +87,47 @@ class PuzzleState(object):
         new_config[blank_index], new_config[target] = new_config[target], new_config[blank_index]
         return PuzzleState(tuple(new_config), self.n, parent=self, action="Down", cost=self.cost + 1)
 
-    def expand(self):
+    def expand(self, change_order=False):
         """expand the node"""
 
-        # add child nodes in order of UDLR
+        # add child nodes in order of ULDR
+        if not change_order:
+            if len(self.children) == 0:
 
-        if len(self.children) == 0:
+                up_child = self.move_up()
+                if up_child is not None:
+                    self.children.append(up_child)
 
-            up_child = self.move_up()
-            if up_child is not None:
-                self.children.append(up_child)
+                down_child = self.move_down()
+                if down_child is not None:
+                    self.children.append(down_child)
 
-            down_child = self.move_down()
-            if down_child is not None:
-                self.children.append(down_child)
+                left_child = self.move_left()
+                if left_child is not None:
+                    self.children.append(left_child)
 
-            left_child = self.move_left()
-            if left_child is not None:
-                self.children.append(left_child)
+                right_child = self.move_right()
+                if right_child is not None:
+                    self.children.append(right_child)
 
-            right_child = self.move_right()
-            if right_child is not None:
-                self.children.append(right_child)
+        else:
+            if len(self.children) == 0:
+
+                up_child = self.move_up()
+                if up_child is not None:
+                    self.children.append(up_child)
+
+                left_child = self.move_left()
+                if left_child is not None:
+                    self.children.append(left_child)
+
+                down_child = self.move_down()
+                if down_child is not None:
+                    self.children.append(down_child)
+
+                right_child = self.move_right()
+                if right_child is not None:
+                    self.children.append(right_child)
 
         return self.children
 
@@ -157,10 +171,14 @@ def bfs_search(initial_state):
     bfs_tree = BFS(start_state=initial_state,
                    goal_state=goal_state,
                    start_ram_usage=start_ram_usage)
-    goal_found, path_to_goal, path_cost, nodes_expanded, search_depth = bfs_tree.search(display_path=True)
+
+    goal_found, path_to_goal, \
+    path_cost, nodes_expanded, \
+    search_depth = bfs_tree.search(display_path=False)
+
     running_time = time.time() - start_time
     max_search_depth = bfs_tree.get_max_search_depth()
-    max_ram_usage = bfs_tree.get_max_ram_usage()
+    max_ram_usage = bfs_tree.get_max_ram_usage()/1024
 
     if not goal_found:
         print('Puzzle is not solvable')
@@ -179,8 +197,36 @@ def bfs_search(initial_state):
 def dfs_search(initial_state):
     """DFS search"""
 
+    goal_state = (0, 1, 2, 3, 4, 5, 6, 7, 8)
+
+    start_time = time.time()
+
     ### STUDENT CODE GOES HERE ###
-    raise NotImplementedError("{}".format(__name__))
+    start_ram_usage = getrusage(RUSAGE_SELF).ru_maxrss
+    dfs_tree = DFS(initial_state=initial_state,
+                   goal_state=goal_state,
+                   start_ram_usage=start_ram_usage)
+
+    goal_found, path_to_goal, \
+    path_cost, nodes_expanded, \
+    search_depth = dfs_tree.search(display_path=False)
+
+    running_time = time.time() - start_time
+    max_search_depth = dfs_tree.get_max_search_depth()
+    max_ram_usage = dfs_tree.get_max_ram_usage()/1024
+
+    if not goal_found:
+        print('Puzzle is not solvable')
+        return
+
+    writeOutput(file_prefix='',
+                path_to_goal=path_to_goal,
+                cost_of_path=path_cost,
+                nodes_expanded=nodes_expanded,
+                search_depth=search_depth,
+                max_search_depth=max_search_depth,
+                running_time=running_time,
+                max_ram_usage=max_ram_usage)
 
 
 def A_star_search(initial_state):
