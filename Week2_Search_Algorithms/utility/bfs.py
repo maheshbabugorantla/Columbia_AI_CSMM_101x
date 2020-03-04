@@ -4,6 +4,7 @@
 from collections import deque
 from resource import getrusage, RUSAGE_SELF
 
+
 class BFS:
 
     def __init__(self, start_state, goal_state, start_ram_usage=0):
@@ -23,7 +24,8 @@ class BFS:
             self.max_search_depth = max(self.max_search_depth, current_depth+1)
             self.queue.append((child, current_depth + 1))
             current_ram_usage = getrusage(RUSAGE_SELF).ru_maxrss
-            self.max_ram_usage = max(self.max_ram_usage, current_ram_usage - self.start_ram)
+            self.max_ram_usage = max(self.max_ram_usage,
+                                     current_ram_usage - self.start_ram)
 
     def is_goal(self):
         return self.current_state.config == self.goal_state
@@ -70,9 +72,11 @@ class BFS:
                     break
                 visited_nodes.add(current_state.config)
                 self._expand_current_node(current_depth=current_depth)
-        self.queue.clear() # Empty the Queue
+        self.queue.clear()  # Empty the Queue
         path_to_goal = self._path_to_goal(display=display_path)
 
         if not goal_found:
-            return False, [], self.current_state.cost, nodes_expanded, search_depth
-        return True, path_to_goal, self.current_state.cost, nodes_expanded-1, search_depth
+            return (False, [], self.current_state.cost,
+                    nodes_expanded, search_depth)
+        return (True, path_to_goal, self.current_state.cost,
+                nodes_expanded - 1, search_depth)

@@ -21,10 +21,11 @@ class DFS:
 
         # Iterating the children keeps expanding the graph size in RAM
         for child in children:
-            self.max_search_depth = max(self.max_search_depth, current_depth + 1)
+            self.max_search_depth = max(self.max_search_depth, current_depth+1)
             self.stack.append((child, current_depth + 1))
             current_ram_usage = getrusage(RUSAGE_SELF).ru_maxrss
-            self.max_ram_usage = max(self.max_ram_usage, current_ram_usage - self.start_ram_usage)
+            self.max_ram_usage = max(self.max_ram_usage,
+                                     current_ram_usage - self.start_ram_usage)
 
     def is_goal(self):
         return self.current_state.config == self.goal_state
@@ -77,5 +78,7 @@ class DFS:
         path_to_goal = self._path_to_goal(display=display_path)
 
         if not goal_found:
-            return False, [], self.current_state.cost, nodes_expanded, search_depth
-        return True, path_to_goal, self.current_state.cost, nodes_expanded-1, search_depth
+            return (False, [], self.current_state.cost,
+                    nodes_expanded, search_depth)
+        return (True, path_to_goal, self.current_state.cost,
+                nodes_expanded-1, search_depth)
