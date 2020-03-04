@@ -11,21 +11,27 @@ class DFS:
         self.initial_state = initial_state
         self.goal_state = goal_state
         self.start_ram_usage = start_ram_usage
+        self.nodes_expanded = 0
         self.max_ram_usage = 0
         self.max_search_depth = 0
+        self.visited_nodes = set()
         self.stack = deque([(self.initial_state, 0)])
 
     def _expand_current_node(self, current_depth=0):
-        children = self.current_state.expand(change_order=True)
+        children = self.current_state.expand()
         children.reverse()
 
+        self.nodes_expanded += 1
         # Iterating the children keeps expanding the graph size in RAM
         for child in children:
-            self.max_search_depth = max(self.max_search_depth, current_depth+1)
-            self.stack.append((child, current_depth + 1))
-            current_ram_usage = getrusage(RUSAGE_SELF).ru_maxrss
-            self.max_ram_usage = max(self.max_ram_usage,
-                                     current_ram_usage - self.start_ram_usage)
+            if tuple(child.config) not in self.visited_nodes:
+                self.visited_nodes.add(tuple(child.config))
+                self.max_search_depth = max(
+                    self.max_search_depth, current_depth+1)
+                self.stack.append((child, current_depth + 1))
+                current_ram_usage = getrusage(RUSAGE_SELF).ru_maxrss
+                current_ram_usage -= self.start_ram_usage
+                self.max_ram_usage = max(self.max_ram_usage, current_ram_usage)
 
     def is_goal(self):
         return self.current_state.config == self.goal_state
@@ -61,24 +67,21 @@ class DFS:
         visited_nodes = set()
         search_depth = 0
         goal_found = False
-        nodes_expanded = 0
 
         while self.stack:
             current_state, current_depth = self.stack.pop()
-            if tuple(current_state.config) not in visited_nodes:
-                nodes_expanded += 1
-                self.current_state = current_state
-                if self.is_goal():
-                    search_depth = current_depth
-                    goal_found = True
-                    break
-                visited_nodes.add(self.current_state.config)
-                self._expand_current_node(current_depth=current_depth)
+            self.current_state = current_state
+            if self.is_goal():
+                search_depth = current_depth
+                goal_found = True
+                break
+            visited_nodes.add(self.current_state.config)
+            self._expand_current_node(current_depth=current_depth)
         self.stack.clear()
         path_to_goal = self._path_to_goal(display=display_path)
 
         if not goal_found:
             return (False, [], self.current_state.cost,
-                    nodes_expanded, search_depth)
+                    self.nodes_expanded, search_depth)
         return (True, path_to_goal, self.current_state.cost,
-                nodes_expanded-1, search_depth)
+                self.nodes_expanded-1, search_depth)
