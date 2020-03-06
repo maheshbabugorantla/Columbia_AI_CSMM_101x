@@ -6,7 +6,6 @@ import math
 from utility.bfs import BFS
 from utility.dfs import DFS
 from utility.a_star import AStar
-from utility.priority_queue import PriorityQueue
 
 
 # The Class that Represents the Puzzle
