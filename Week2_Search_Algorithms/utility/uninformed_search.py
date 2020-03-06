@@ -7,7 +7,7 @@ class UninformedSearch:
 
     __slots__ = ('intial_state', 'goal_state', 'start_ram_usage',
                  'nodes_expanded', 'max_ram_usage', 'max_search_depth',
-                 'visited_nodes', 'unexplored_nodes')
+                 'visited_nodes', 'unexplored_nodes', 'current_state')
 
     def __init__(self, intial_state, goal_state, start_ram_usage=0):
         self.initial_state = intial_state
@@ -17,6 +17,7 @@ class UninformedSearch:
         self.max_ram_usage = 0
         self.max_search_depth = 0
         self.visited_nodes = set()
+        self.current_state = self.initial_state
         self.unexplored_nodes = deque([(self.initial_state, 0)])
 
     def _expand_current_node(self, current_depth=0, reversed=False):
