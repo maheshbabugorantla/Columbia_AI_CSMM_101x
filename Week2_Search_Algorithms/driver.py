@@ -239,7 +239,35 @@ def dfs_search(initial_state):
 def A_star_search(initial_state):
     """A * search"""
 
-    raise NotImplementedError("{}".format(__name__))
+    goal_state = (0, 1, 2, 3, 4, 5, 6, 7, 8)
+
+    start_time = time.time()
+
+    start_ram_usage = getrusage(RUSAGE_SELF).ru_maxrss
+    astar_tree = AStar(initial_state=initial_state,
+                       goal_state=goal_state,
+                       start_ram_usage=start_ram_usage)
+
+    (goal_found, path_to_goal,
+     path_cost, nodes_expanded,
+     search_depth) = astar_tree.search(display_path=False)
+
+    running_time = time.time() - start_time
+    max_search_depth = astar_tree.get_max_search_depth()
+    max_ram_usage = astar_tree.get_max_ram_usage()/1024
+
+    if not goal_found:
+        print('Puzzle is not solvable')
+        return
+
+    writeOutput(file_prefix='',
+                path_to_goal=path_to_goal,
+                cost_of_path=path_cost,
+                nodes_expanded=nodes_expanded,
+                search_depth=search_depth,
+                max_search_depth=max_search_depth,
+                running_time=running_time,
+                max_ram_usage=max_ram_usage)
 
 
 def calculate_total_cost(state):
