@@ -2,65 +2,12 @@
     Depth First Search
 """
 
-from collections import deque
-from resource import getrusage, RUSAGE_SELF
+from utility.uninformed_search import UninformedSearch
 
 
-class DFS:
+class DFS(UninformedSearch):
     def __init__(self, initial_state, goal_state, start_ram_usage):
-        self.initial_state = initial_state
-        self.goal_state = goal_state
-        self.start_ram_usage = start_ram_usage
-        self.nodes_expanded = 0
-        self.max_ram_usage = 0
-        self.max_search_depth = 0
-        self.visited_nodes = set()
-        self.stack = deque([(self.initial_state, 0)])
-
-    def _expand_current_node(self, current_depth=0):
-        children = self.current_state.expand()
-        children.reverse()
-
-        self.nodes_expanded += 1
-        # Iterating the children keeps expanding the graph size in RAM
-        for child in children:
-            if tuple(child.config) not in self.visited_nodes:
-                self.visited_nodes.add(tuple(child.config))
-                self.max_search_depth = max(
-                    self.max_search_depth, current_depth+1)
-                self.stack.append((child, current_depth + 1))
-                current_ram_usage = getrusage(RUSAGE_SELF).ru_maxrss
-                current_ram_usage -= self.start_ram_usage
-                self.max_ram_usage = max(self.max_ram_usage, current_ram_usage)
-
-    def is_goal(self):
-        return self.current_state.config == self.goal_state
-
-    def _path_to_goal(self, display=False):
-
-        actions_to_goal = [self.current_state.action]
-        path_to_goal = [self.current_state]
-        parent_node = self.current_state.parent
-        while parent_node.parent:
-            actions_to_goal.append(parent_node.action)
-            path_to_goal.append(parent_node)
-            parent_node = parent_node.parent
-
-        if display:
-            path_to_goal.reverse()
-            print("Game Path: \n")
-            for path in path_to_goal:
-                path.display()
-                print("\n")
-
-        actions_to_goal.reverse()
-        return actions_to_goal
-
-    def get_max_ram_usage(self):
-        return self.max_ram_usage
-
-    def get_max_search_depth(self):
-        return self.max_search_depth
+        super().__init__(initial_state, goal_state, start_ram_usage)
 
     def search(self, display_path=False):
 
@@ -68,16 +15,17 @@ class DFS:
         search_depth = 0
         goal_found = False
 
-        while self.stack:
-            current_state, current_depth = self.stack.pop()
+        while self.unexplored_nodes:
+            current_state, current_depth = self.unexplored_nodes.pop()
             self.current_state = current_state
             if self.is_goal():
                 search_depth = current_depth
                 goal_found = True
                 break
             visited_nodes.add(self.current_state.config)
-            self._expand_current_node(current_depth=current_depth)
-        self.stack.clear()
+            self._expand_current_node(current_depth=current_depth,
+                                      reversed=True)
+        self.unexplored_nodes.clear()
         path_to_goal = self._path_to_goal(display=display_path)
 
         if not goal_found:
