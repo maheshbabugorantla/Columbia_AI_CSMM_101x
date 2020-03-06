@@ -9,12 +9,6 @@ class BFS(UninformedSearch):
     def __init__(self, initial_state, goal_state, start_ram_usage=0):
         super().__init__(initial_state, goal_state, start_ram_usage)
 
-    def get_max_ram_usage(self):
-        return self.max_ram_usage
-
-    def get_max_search_depth(self):
-        return self.max_search_depth
-
     def search(self, display_path=False):
 
         search_depth = 0
