@@ -18,7 +18,7 @@ class PriorityQueue:
         self._index += 1
 
     def pop(self):
-        return heappop(self._queue)
+        return heappop(self._queue)[-1]
 
     def clear(self):
         self._queue.clear()
