@@ -9,3 +9,7 @@ __pycache__
 
 # Ignore VSCode Stuff
 .vscode/
+
+# IntelliJ IDEA Stuff
+.idea/
+
