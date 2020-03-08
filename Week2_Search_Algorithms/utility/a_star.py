@@ -69,15 +69,14 @@ class AStar:
 
     def _expand_current_node(self):
 
-        children = self.current_state.expand()
+        children = self.current_state.expand(change_order=True)
 
         self.nodes_expanded += 1
         for child in children:
             child_config = tuple(child.config)
             if child_config not in self.visited_nodes and \
-                    child_config not in self.frontier_map:
-                self.visited_nodes.add(tuple(child.config))
-                self.frontier_map[tuple(child.config)] = child
+                child_config not in self.frontier_map:
+                self.frontier_map[child_config] = child
                 _cost = self._get_total_cost(child)
                 self.frontier.push(child, _cost)
                 self.max_search_depth = max(self.max_search_depth,
@@ -119,17 +118,17 @@ class AStar:
     def search(self, display_path=False):
 
         initial_cost = self._get_total_cost(self.initial_state)
-        self.frontier.push(self.current_state, initial_cost)
-        current_config = tuple(self.current_state.config)
-        self.visited_nodes.add(current_config)
-        self.frontier_map[current_config] = self.current_state
+        self.frontier.push(self.initial_state, initial_cost)
+        current_config = tuple(self.initial_state.config)
+        self.frontier_map[current_config] = self.initial_state
 
         goal_found = False
         search_depth = 0
 
         while not self.frontier.empty():
-            state = self.frontier.pop()
-            self.current_state = state
+            self.current_state = self.frontier.pop()
+            current_config = tuple(self.current_state.config)
+            self.visited_nodes.add(current_config)
             if self.is_goal():
                 search_depth = self.current_state.cost
                 goal_found = True
