@@ -9,8 +9,8 @@ class UninformedSearch:
                  'nodes_expanded', 'max_ram_usage', 'max_search_depth',
                  'visited_nodes', 'unexplored_nodes', 'current_state')
 
-    def __init__(self, intial_state, goal_state, start_ram_usage=0):
-        self.initial_state = intial_state
+    def __init__(self, initial_state, goal_state, start_ram_usage=0):
+        self.initial_state = initial_state
         self.goal_state = goal_state
         self.start_ram_usage = start_ram_usage
         self.nodes_expanded = 0
