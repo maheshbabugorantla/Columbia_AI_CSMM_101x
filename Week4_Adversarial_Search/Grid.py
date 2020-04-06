@@ -3,8 +3,9 @@ from copy import deepcopy
 directionVectors = (UP_VEC, DOWN_VEC, LEFT_VEC, RIGHT_VEC) = ((-1, 0), (1, 0), (0, -1), (0, 1))
 vecIndex = [UP, DOWN, LEFT, RIGHT] = range(4)
 
+
 class Grid:
-    def __init__(self, size = 4):
+    def __init__(self, size=4):
         self.size = size
         self.map = [[0] * self.size for i in range(self.size)]
 
@@ -30,7 +31,7 @@ class Grid:
         for x in range(self.size):
             for y in range(self.size):
                 if self.map[x][y] == 0:
-                    cells.append((x,y))
+                    cells.append((x, y))
 
         return cells
 
@@ -63,7 +64,7 @@ class Grid:
 
     # Move Up or Down
     def moveUD(self, down):
-        r = range(self.size -1, -1, -1) if down else range(self.size)
+        r = range(self.size-1, -1, -1) if down else range(self.size)
 
         moved = False
 
@@ -130,7 +131,7 @@ class Grid:
 
             i += 1
 
-    def canMove(self, dirs = vecIndex):
+    def canMove(self, dirs=vecIndex):
 
         # Init Moves to be Checked
         checkingMoves = set(dirs)
@@ -158,7 +159,7 @@ class Grid:
         return False
 
     # Return All Available Moves
-    def getAvailableMoves(self, dirs = vecIndex):
+    def getAvailableMoves(self, dirs=vecIndex):
         availableMoves = []
 
         for x in dirs:
@@ -177,6 +178,7 @@ class Grid:
             return self.map[pos[0]][pos[1]]
         else:
             return None
+
 
 if __name__ == '__main__':
     g = Grid()
