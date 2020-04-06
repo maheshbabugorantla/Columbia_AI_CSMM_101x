@@ -21,16 +21,17 @@ actionDic = {
 timeLimit = 0.2
 allowance = 0.05
 
+
 class GameManager:
-    def __init__(self, size = 4):
+    def __init__(self, size=4):
         self.grid = Grid(size)
         self.possibleNewTiles = [2, 4]
         self.probability = defaultProbability
-        self.initTiles  = defaultInitialTiles
+        self.initTiles = defaultInitialTiles
         self.computerAI = None
-        self.playerAI   = None
-        self.displayer  = None
-        self.over       = False
+        self.playerAI = None
+        self.displayer = None
+        self.over = False
 
     def setComputerAI(self, computerAI):
         self.computerAI = computerAI
@@ -74,7 +75,7 @@ class GameManager:
                 print(actionDic[move])
 
                 # Validate Move
-                if move != None and move >= 0 and move < 4:
+                if move is not None and move >= 0 and move < 4:
                     if self.grid.canMove([move]):
                         self.grid.move(move)
 
@@ -110,7 +111,7 @@ class GameManager:
         return not self.grid.canMove()
 
     def getNewTileValue(self):
-        if randint(0,99) < 100 * self.probability:
+        if randint(0, 99) < 100 * self.probability:
             return self.possibleNewTiles[0]
         else:
             return self.possibleNewTiles[1]
@@ -121,17 +122,19 @@ class GameManager:
         cell = cells[randint(0, len(cells) - 1)]
         self.grid.setCellValue(cell, tileValue)
 
+
 def main():
     gameManager = GameManager()
-    playerAI  	= PlayerAI()
-    computerAI  = ComputerAI()
-    displayer 	= Displayer()
+    playerAI = PlayerAI()
+    computerAI = ComputerAI()
+    displayer = Displayer()
 
     gameManager.setDisplayer(displayer)
     gameManager.setPlayerAI(playerAI)
     gameManager.setComputerAI(computerAI)
 
     gameManager.start()
+
 
 if __name__ == '__main__':
     main()

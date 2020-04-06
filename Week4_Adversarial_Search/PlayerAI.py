@@ -62,22 +62,22 @@ class PlayerAI(BaseAI):
         return (min_child, min_utility)
 
     def _eval_function(self, grid=None):
-        # Simple strategy is to ensure higher number of empty cells after each move
-        h1 = len(grid.getAvailableCells())/(grid.size**2)
+        # Simple strategy: ensure higher number of empty cells after each move
+        h1 = len(grid.getAvailableCells()) / (grid.size**2)
 
         # Clustering Penalty
         penalty = 0
         total_sum = sum(chain.from_iterable(grid.map))
-        # Adjacent cells are penalized heavily for being greater than current cell value
+        # Adjacent cells are penalized for being greater than current cell
         for i in range(grid.size):
-            for j in range(i, grid.size-1):
-                penalty += abs(grid.map[i][j+1] - grid.map[i][j])
+            for j in range(i, grid.size - 1):
+                penalty += abs(grid.map[i][j + 1] - grid.map[i][j])
 
         for i in range(grid.size):
-            for j in range(i, grid.size-1):
-                penalty += abs(grid.map[j][i+1] - grid.map[j][i])
+            for j in range(i, grid.size - 1):
+                penalty += abs(grid.map[j][i + 1] - grid.map[j][i])
 
-        h2 = penalty/(2*total_sum)
+        h2 = penalty / (2 * total_sum)
         return h1 - h2
 
     def getMove(self, grid=None):

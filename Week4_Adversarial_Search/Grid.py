@@ -1,6 +1,7 @@
 from copy import deepcopy
 
-directionVectors = (UP_VEC, DOWN_VEC, LEFT_VEC, RIGHT_VEC) = ((-1, 0), (1, 0), (0, -1), (0, 1))
+directionVectors = (UP_VEC, DOWN_VEC, LEFT_VEC, RIGHT_VEC) = ((-1, 0), (1, 0),
+                                                              (0, -1), (0, 1))
 vecIndex = [UP, DOWN, LEFT, RIGHT] = range(4)
 
 
@@ -64,7 +65,7 @@ class Grid:
 
     # Move Up or Down
     def moveUD(self, down):
-        r = range(self.size-1, -1, -1) if down else range(self.size)
+        r = range(self.size - 1, -1, -1) if down else range(self.size)
 
         moved = False
 
@@ -124,10 +125,10 @@ class Grid:
         i = 0
 
         while i < len(cells) - 1:
-            if cells[i] == cells[i+1]:
+            if cells[i] == cells[i + 1]:
                 cells[i] *= 2
 
-                del cells[i+1]
+                del cells[i + 1]
 
             i += 1
 
@@ -146,7 +147,8 @@ class Grid:
                     for i in checkingMoves:
                         move = directionVectors[i]
 
-                        adjCellValue = self.getCellValue((x + move[0], y + move[1]))
+                        adjCellValue = self.getCellValue((x + move[0],
+                                                          y + move[1]))
 
                         # If Value is the Same or Adjacent Cell is Empty
                         if adjCellValue == self.map[x][y] or adjCellValue == 0:
@@ -171,7 +173,10 @@ class Grid:
         return availableMoves
 
     def crossBound(self, pos):
-        return pos[0] < 0 or pos[0] >= self.size or pos[1] < 0 or pos[1] >= self.size
+        return pos[0] < 0 or \
+               pos[0] >= self.size or \
+               pos[1] < 0 or \
+               pos[1] >= self.size
 
     def getCellValue(self, pos):
         if not self.crossBound(pos):
