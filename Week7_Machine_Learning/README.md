@@ -51,15 +51,21 @@ In this problem, you will work on linear regression with multiple features using
 
 For each feature x (a column in your data matrix), use the following formula for scaling:
 
-$$ x_{scaled} = \frac{x - \mu(x)}{stdev(x)} $$
+<p align="center">
+<img src="https://render.githubusercontent.com/render/math?math=x_{scaled} = \frac{x - \mu(x)}{stdev(x)}" />
+</p>
 
-**Gradient Descent**. Implement gradient descent to find a regression model. Initialize your $\beta$'s to zero. Recall the empirical risk and gradient descent rule as follows:
+**Gradient Descent**. Implement gradient descent to find a regression model. Initialize your <img src="https://render.githubusercontent.com/render/math?math=\beta"/>'s to zero. Recall the empirical risk and gradient descent rule as follows:
 
-$$ R(\beta) = \frac{1}{2n}{\sum_{i=0}^{n}}(f(x_i) - y_i)^2 $$
+<p align="center">
+<img src="https://render.githubusercontent.com/render/math?math=R(\beta) = \frac{1}{2n}{\sum_{i=0}^{n}}(f(x_i) - y_i)^2" />
+</p>
 
-$$ \forall{j}\space\space\space\space\space \beta_j := \beta_j - \alpha\frac{1}{n}\sum_{i=0}^{n}(f(x_i) - y_i)x_i $$
+<p align="center">
+<img src="https://render.githubusercontent.com/render/math?math=\forall{j}\space\space\space\space\space \beta_j := \beta_j - \alpha\frac{1}{n}\sum_{i=0}^{n}(f(x_i) - y_i)x_i"/>
+</p>
 
-Run the gradient descent algorithm using the following **learning rates**: $\alpha \space \space \epsilon \space \space \{ 0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5, 10 \}$. For each value of $\alpha$, run the algorithm for exactly **100 iterations**. Compare the convergence rate when $\alpha$ is small versus large. What is the ideal learning rate to obtain an accurate model? In addition to the nine learning rates above, come up with **your own choice** of value for the learning rate. Then, using this new learning rate, run the algorithm for your own choice number of iterations.
+Run the gradient descent algorithm using the following **learning rates**: <img src="https://render.githubusercontent.com/render/math?math=\alpha \space \space \epsilon \space \space \{ 0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5, 10 \}" />. For each value of <img src="https://render.githubusercontent.com/render/math?math=\alpha" />, run the algorithm for exactly **100 iterations**. Compare the convergence rate when <img src="https://render.githubusercontent.com/render/math?math=\alpha" /> is small versus large. What is the ideal learning rate to obtain an accurate model? In addition to the nine learning rates above, come up with **your own choice** of value for the learning rate. Then, using this new learning rate, run the algorithm for your own choice number of iterations.
 
 Implement your gradient descent in a file called `problem2.py`, which will be executed like so:
 
@@ -83,7 +89,7 @@ This should generate an output file called `output2.csv`. There are **ten cases*
 
 In this problem you will use the support vector classifiers in the **sklearn** package to learn a classification model for a chessboard-like dataset. In your starter code, you will find `input3.csv`, containing a series of data points. Open the dataset in python. Make a scatter plot of the dataset showing the two classes with two different patterns.
 
-Use SVM with different kernels to build a classifier. Make sure you split your data into **training** ($60\%$) and **testing** ($40\%$). Also make sure you use **stratified sampling** (i.e. same ratio of positive to negative in both the training and testing datasets). Use **cross validation** (with the number of folds *k = 5*) instead of a validation set. You do not need to scale/normalize the data for this question. Train-test splitting and cross validation functionalities are all readily available in sklearn.
+Use SVM with different kernels to build a classifier. Make sure you split your data into **training** (60%) and **testing** (40%). Also make sure you use **stratified sampling** (i.e. same ratio of positive to negative in both the training and testing datasets). Use **cross validation** (with the number of folds *k = 5*) instead of a validation set. You do not need to scale/normalize the data for this question. Train-test splitting and cross validation functionalities are all readily available in sklearn.
 
 * **SVM with Linear Kernel**. Observe the performance of the SVM with linear kernel. Search for a good setting of parameters to obtain high classification accuracy. Specifically, try values of C = [0.1, 0.5, 1, 5, 10, 50, 100]. Read about **sklearn.grid_search** and how this can help you accomplish this task. After locating the optimal parameter value by using the training data, record the corresponding **best score** (training data accuracy) achieved. Then apply the testing data to the model, and record the actual **test score**. Both scores will be a number between zero and one.
 
@@ -114,7 +120,6 @@ Try values of max_depth = [1, 2, 3, ..., 50] and min_samples_split = [2, 3, 4, .
 ## **BEFORE YOU SUBMIT**
 * **Make sure** your code executes without fail on Vocareum. In particular, make sure you name your file correctly according to the instructions specified above, especially regarding different Python versions.
 
-* **Bonus Credits for Early Submission:**  If you finish this project assignment before **April 12th 2020 23:30 UTC**  you will get extra credits for this homework as a bonus (we count grades on your latest submission). Due to edX policy, all assignment grades are capped at $100\%$.
+* **Bonus Credits for Early Submission:**  If you finish this project assignment before **April 12th 2020 23:30 UTC**  you will get extra credits for this homework as a bonus (we count grades on your latest submission). Due to edX policy, all assignment grades are capped at 100%.
 
 * **You have an unlimited number of submissions**.
-
