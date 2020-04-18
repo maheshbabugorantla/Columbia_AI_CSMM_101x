@@ -8,8 +8,8 @@
 
 2. [Week 4 Project: Adversarial Search and Games](Week4_Adversarial_Search/PlayerAI.py) - `March 22, 2020 - 23:30 UTC`
 
-3. Week 7 Project: Machine Learning - `April 12, 2020 - 23:30 UTC`
+3. [Week 7 Project: Machine Learning](Week7_Machine_Learning/) - `April 12, 2020 - 23:30 UTC`
 
-4. Week 9 Project: Constraint Satisfaction Problems - `April 26, 2020 - 23:30 UTC`
+4. [Week 9 Project: Constraint Satisfaction Problems](Week9_Constraint_Satisfaction/) - `April 26, 2020 - 23:30 UTC`
 
-5. Week 11 Project: NLP - `May 3, 2020 - 23:30 UTC`
+5. [Week 11 Project: NLP](Week11_NLP/)- `May 3, 2020 - 23:30 UTC`
