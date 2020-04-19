@@ -26,7 +26,7 @@ class PLA:
             raise TypeError(f"{target_column} should be {str}")
 
         if not exists(csv_file):
-            raise IOError(f"{csv_file} file path is not existent")
+            raise IOError(f"{csv_file} file path does not exist")
 
         self.X = pd.read_csv(csv_file, header=None)
 
