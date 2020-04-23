@@ -12,4 +12,4 @@ __pycache__
 
 # IntelliJ IDEA Stuff
 .idea/
-
+.DS_Store
