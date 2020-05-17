@@ -72,9 +72,8 @@ class TextClassifier:
         matrix = vectorizer.fit_transform(self.train_data['text'])
         self.vocabulary = vectorizer.vocabulary_
         clf = SGDClassifier(loss='hinge', penalty='l1')
-        clf.fit(matrix, self.train_data['text'])
+        clf.fit(matrix, self.train_data['polarity'])
         self.clf = clf
-        # return vocabulary, clf
 
     def train_using_count(self, n_gram=1):
         count_vectorizer = CountVectorizer(ngram_range=(1, n_gram),
