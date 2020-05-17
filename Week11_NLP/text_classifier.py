@@ -71,7 +71,7 @@ class TextClassifier:
     def _apply_sgd_classifier(self, vectorizer=None):
         matrix = vectorizer.fit_transform(self.train_data['text'])
         self.vocabulary = vectorizer.vocabulary_
-        clf = SGDClassifier(loss='hinge', penalty='l1')
+        clf = SGDClassifier(loss='modified_huber', penalty='l1')
         clf.fit(matrix, self.train_data['polarity'])
         self.clf = clf
 
