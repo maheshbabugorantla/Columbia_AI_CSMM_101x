@@ -27,7 +27,7 @@ class TextClassifier:
 
     def _format_text(self, raw_text):
 
-        formatted_text = None
+        formatted_text = raw_text.replace('<br />', ' ')
         for c in punctuation:
             formatted_text = raw_text.replace(c, ' ')
         
