@@ -12,12 +12,12 @@ def write_results_to_file(filename, test_preds):
 def main():
 
     # Vocareum Paths
-    train_path = "../resource/lib/publicdata/aclImdb/train"
-    test_path = "../resource/lib/publicdata/imdb_te.csv"
+    # train_path = "../resource/lib/publicdata/aclImdb/train"
+    # test_path = "../resource/lib/publicdata/imdb_te.csv"
 
     # Local Machine Paths
-    # train_path = "aclImdb/train"
-    # test_path = "imdb_te.csv"
+    train_path = "aclImdb/train"
+    test_path = "imdb_te.csv"
 
     sentiment_classifier = TextClassifier(
         stop_words_file='stopwords.en.txt',
@@ -59,7 +59,7 @@ def main():
     '''
     sentiment_classifier.train_using_tfidf(n_gram=2)
     predictions = sentiment_classifier.test_using_tfidf(n_gram=2)
-    write_results_to_file('unigramtfidf.output.txt', predictions)
+    write_results_to_file('bigramtfidf.output.txt', predictions)
 
 
 if __name__ == "__main__":
